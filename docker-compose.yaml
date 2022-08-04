@@ -212,6 +212,5 @@ services:
       
       
 networks:
-  default:
-    external:
-      name: fatheadl-net
+  fatheadl-net:
+    external: true
