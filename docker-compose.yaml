@@ -16,6 +16,7 @@ services:
       - 8086:8086
 #    networks:
 #      - fatheadl-net
+    mac_address: 02:42:bA:45:24:51
     volumes:
       - /share/homelab/influxdb2/data:/var/lib/influxdb2
       - /share/homelab/influxdb2/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
@@ -31,6 +32,7 @@ services:
     user: "0"
     ports:
       - 3000:3000
+    mac_address: 02:42:bA:45:24:52      
     volumes:
       - /share/homelab/grafana:/var/lib/grafana
       - /share/homelab/grafana/provisioning:/etc/grafana/provisioning
@@ -62,7 +64,8 @@ services:
       - "/share/homelab/node-red:/data"
     user: "0"
     restart: unless-stopped
-    network_mode: host
+#    network_mode: host
+    mac_address: 02:42:bA:45:24:53
 #    networks:
 #      - fatheadl-net
 #    ports:
@@ -86,6 +89,7 @@ services:
       - /run/udev:/run/udev:ro
     ports:
       - 8880:8080
+    mac_address: 02:42:bA:45:24:54      
  #   networks:
  #     - fatheadl-net
     environment:
@@ -113,6 +117,7 @@ services:
     restart: unless-stopped
  #   networks:
  #     - fatheadl-net
+     mac_address: 02:42:bA:45:24:55
     ports:
       - "1883:1883"
       - "9001:9001"
@@ -125,7 +130,8 @@ services:
       - TZ=${TIMEZONE}
 #    networks:
 #      - fatheadl-net
-    network_mode: host
+    mac_address: 02:42:bA:45:24:56
+#    network_mode: host
 #    ports:
 #      - "8123:8123"
     volumes:
@@ -166,7 +172,8 @@ services:
 #      - 8181:8181
 #      - 51826:51826
     restart: unless-stopped
-    network_mode: host
+    mac_address: 02:42:bA:45:24:57    
+#    network_mode: host
     labels:
       - traefik.enable=true
       - traefik.http.services.homebridge.loadbalancer.server.port=8581
@@ -185,6 +192,7 @@ services:
     restart: unless-stopped
  #   networks:
  #     - fatheadl-net
+     mac_address: 02:42:bA:45:24:58
     volumes:
       - /share/homelab/gitea:/data
       - /etc/timezone:/etc/timezone:ro
