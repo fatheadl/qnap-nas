@@ -117,7 +117,7 @@ services:
     restart: unless-stopped
  #   networks:
  #     - fatheadl-net
-     mac_address: 02:42:bA:45:24:55
+    mac_address: 02:42:bA:45:24:55
     ports:
       - "1883:1883"
       - "9001:9001"
