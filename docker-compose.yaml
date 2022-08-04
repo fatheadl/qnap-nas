@@ -14,8 +14,8 @@ services:
 
     ports:
       - 8086:8086
-#    networks:
-#      - fatheadl-net
+    networks:
+      - fatheadl-net
     mac_address: 02:42:bA:45:24:51
     volumes:
       - /share/homelab/influxdb2/data:/var/lib/influxdb2
@@ -40,8 +40,8 @@ services:
       - /share/homelab/grafana/dashboards:/etc/grafana/dashboards
     restart:
       unless-stopped
- #   networks:
- #     - fatheadl-net      
+    networks:
+      - fatheadl-net      
     labels:
       - traefik.enable=true
       - traefik.http.services.grafana.loadbalancer.server.port=3000
@@ -66,10 +66,10 @@ services:
     restart: unless-stopped
 #    network_mode: host
     mac_address: 02:42:bA:45:24:53
-#    networks:
-#      - fatheadl-net
-#    ports:
-#      - "1880:1880"
+    networks:
+      - fatheadl-net
+    ports:
+      - "1880:1880"
 
     labels:
       - traefik.enable=true
@@ -90,8 +90,8 @@ services:
     ports:
       - 8880:8080
     mac_address: 02:42:bA:45:24:54      
- #   networks:
- #     - fatheadl-net
+    networks:
+      - fatheadl-net
     environment:
       - TZ=${TIMEZONE}
 #    devices:
@@ -115,8 +115,8 @@ services:
       - '/share/homelab/mosquitto/log:/mosquitto/log'
       - '/share/homelab/mosquitto/data:/mosquitto/data'
     restart: unless-stopped
- #   networks:
- #     - fatheadl-net
+    networks:
+      - fatheadl-net
     mac_address: 02:42:bA:45:24:55
     ports:
       - "1883:1883"
@@ -128,12 +128,12 @@ services:
     image: homeassistant/home-assistant:2022.8.0
     environment:
       - TZ=${TIMEZONE}
-#    networks:
-#      - fatheadl-net
+    networks:
+      - fatheadl-net
     mac_address: 02:42:bA:45:24:56
 #    network_mode: host
-#    ports:
-#      - "8123:8123"
+    ports:
+      - "8123:8123"
     volumes:
       - /share/homelab/homeassistant:/config
 #      - /etc/localtime:/etc/localtime:ro
@@ -167,10 +167,12 @@ services:
       - HOMEBRIDGE_CONFIG_UI_PORT=8581
     volumes:
       - /share/homelab/homebridge:/homebridge
-#    ports:
-#      - 8080:8080
-#      - 8181:8181
-#      - 51826:51826
+    networks:
+      - fatheadl-net      
+    ports:
+      - 8080:8080
+      - 8181:8181
+      - 51826:51826
     restart: unless-stopped
     mac_address: 02:42:bA:45:24:57    
 #    network_mode: host
@@ -190,8 +192,8 @@ services:
       - USER_UID=1000
       - USER_GID=1000
     restart: unless-stopped
- #   networks:
- #     - fatheadl-net
+    networks:
+      - fatheadl-net
     mac_address: 02:42:bA:45:24:58
     volumes:
       - /share/homelab/gitea:/data
