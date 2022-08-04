@@ -1,0 +1,209 @@
+version: "3"
+services:
+  influxdb:
+    image: influxdb:2.3
+    container_name: influxdb
+    environment:
+      - TZ=America/Jamaica
+      - INFLUXD_REPORTING_DISABLED=true
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_ADMIN_PASSWORD} # set in .env
+      - DOCKER_INFLUXDB_INIT_ORG=ensom
+      - DOCKER_INFLUXDB_INIT_BUCKET=solar
+
+    ports:
+      - 8086:8086
+#    networks:
+#      - fatheadl-net
+    volumes:
+      - /share/homelab/influxdb2/data:/var/lib/influxdb2
+      - /share/homelab/influxdb2/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+    restart:
+      unless-stopped
+      
+  grafana:
+    image: grafana/grafana:9.0.6
+    container_name: grafana
+    environment:
+      - TZ=${TIMEZONE}
+      - GF_SERVER_DOMAIN=${PUBLIC_DOMAIN}
+    user: "0"
+    ports:
+      - 3000:3000
+    volumes:
+      - /share/homelab/grafana:/var/lib/grafana
+      - /share/homelab/grafana/provisioning:/etc/grafana/provisioning
+      - /share/homelab/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - /share/homelab/grafana/dashboards:/etc/grafana/dashboards
+    restart:
+      unless-stopped
+ #   networks:
+ #     - fatheadl-net      
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
+      - traefik.http.routers.grafana.rule=Host(`graf.${PUBLIC_DOMAIN}`)
+      - traefik.http.routers.grafana.entrypoints=websecure
+        #      - traefik.http.routers.homeassistant.tls=true
+      - traefik.http.routers.grafana.tls.certresolver=le
+      - traefik.docker.network=fatheadl-net
+      
+  node-red:
+ #   depends_on:
+ #      - broker
+    container_name: node-red
+    image: nodered/node-red:3.0.1
+    environment:
+    #      - SET_CONTAINER_TIMEZONE=true
+    #      - CONTAINER_TIMEZONE=${TIMEZONE}
+      - TZ=${TIMEZONE}
+    volumes:
+      - "/share/homelab/node-red:/data"
+    user: "0"
+    restart: unless-stopped
+    network_mode: host
+#    networks:
+#      - fatheadl-net
+#    ports:
+#      - "1880:1880"
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.node-red.loadbalancer.server.port=1880
+      - traefik.http.routers.node-red.rule=Host(`nr.${PUBLIC_DOMAIN}`)
+      - traefik.http.routers.node-red.entrypoints=websecure
+#      - traefik.http.routers.homeassistant.tls=true
+      - traefik.http.routers.node-red.tls.certresolver=le
+      - traefik.docker.network=fatheadl-net
+      
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    image: koenkk/zigbee2mqtt:1.27.0
+    volumes:
+      - /share/homelab/zigbee2mqtt-data:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8880:8080
+ #   networks:
+ #     - fatheadl-net
+    environment:
+      - TZ=${TIMEZONE}
+#    devices:
+#      - /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_32671b6053c8eb11a8f8c5c3de5b81b4-if00-port0:/dev/ttyUSB0
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.zigbee2mqtt.loadbalancer.server.port=8080
+      - traefik.http.routers.zigbee2mqtt.rule=Host(`z2m.${PUBLIC_DOMAIN}`)
+      - traefik.http.routers.zigbee2mqtt.entrypoints=websecure
+#      - traefik.http.routers.homeassistant.tls=true
+      - traefik.http.routers.zigbee2mqtt.tls.certresolver=le
+      - traefik.docker.network=fatheadl-net
+      
+  broker:
+    container_name: mqtt
+    image: eclipse-mosquitto:2.0.14
+    environment:
+      - TZ=${TIMEZONE}
+    volumes:
+      - '/share/homelab/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf'
+      - '/share/homelab/mosquitto/log:/mosquitto/log'
+      - '/share/homelab/mosquitto/data:/mosquitto/data'
+    restart: unless-stopped
+ #   networks:
+ #     - fatheadl-net
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+      
+  homeassistant:
+    container_name: homeassistant
+    #    image: homeassistant/raspberrypi4-homeassistant:stable
+    image: homeassistant/home-assistant:2022.8.0
+    environment:
+      - TZ=${TIMEZONE}
+#    networks:
+#      - fatheadl-net
+    network_mode: host
+#    ports:
+#      - "8123:8123"
+    volumes:
+      - /share/homelab/homeassistant:/config
+#      - /etc/localtime:/etc/localtime:ro
+#      - /etc/letsencrypt:/etc/letsencrypt:ro
+#    devices:
+            #      - /dev/ttyACM0:/dev/ttyACM0:rwm
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8123"]
+      interval: 30s
+      timeout: 10s
+      retries: 6
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.homeassistant.loadbalancer.server.port=8123
+      - traefik.http.routers.homeassistant.rule=Host(`ha.${PUBLIC_DOMAIN}`)
+      - traefik.http.routers.homeassistant.entrypoints=websecure
+        #      - traefik.http.routers.homeassistant.tls=true
+      - traefik.http.routers.homeassistant.tls.certresolver=le
+      - traefik.docker.network=fatheadl-net
+      
+  homebridge:
+    image: ghcr.io/oznu/homebridge:ubuntu
+    container_name: homebridge
+    environment:
+      - TZ=${TIMEZONE}
+      - PGID=1000
+      - PUID=1000
+      - HOMEBRIDGE_CONFIG_UI=1
+      - HOMEBRIDGE_CONFIG_UI_PORT=8581
+    volumes:
+      - /share/homelab/homebridge:/homebridge
+#    ports:
+#      - 8080:8080
+#      - 8181:8181
+#      - 51826:51826
+    restart: unless-stopped
+    network_mode: host
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.homebridge.loadbalancer.server.port=8581
+      - traefik.http.routers.homebridge.rule=Host(`hb.${PUBLIC_DOMAIN}`)
+      - traefik.http.routers.homebridge.entrypoints=websecure
+#      - traefik.http.routers.hoobs.service=hoobs
+      - traefik.http.routers.homebridge.tls.certresolver=le
+      - traefik.docker.network=fatheadl-net
+      
+  gitea:
+    image: gitea/gitea:1.17.0
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: unless-stopped
+ #   networks:
+ #     - fatheadl-net
+    volumes:
+      - /share/homelab/gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3030:3000"
+      - "222:22"
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.gitea.loadbalancer.server.port=3000
+      - traefik.http.routers.gitea.rule=Host(`gitea.${PUBLIC_DOMAIN}`)
+      - traefik.http.routers.gitea.entrypoints=websecure
+#      - traefik.http.routers.hoobs.service=hoobs
+      - traefik.http.routers.gitea.tls.certresolver=le
+      - traefik.docker.network=fatheadl-net      
+      
+      
+      
+networks:
+  default:
+    external:
+      name: fatheadl-net
