@@ -192,7 +192,7 @@ services:
     restart: unless-stopped
  #   networks:
  #     - fatheadl-net
-     mac_address: 02:42:bA:45:24:58
+    mac_address: 02:42:bA:45:24:58
     volumes:
       - /share/homelab/gitea:/data
       - /etc/timezone:/etc/timezone:ro
