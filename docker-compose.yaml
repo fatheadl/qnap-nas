@@ -4,7 +4,7 @@ services:
     image: influxdb:2.3
     container_name: influxdb
     environment:
-      - TZ=America/Jamaica
+      - TZ=${TIMEZONE}
       - INFLUXD_REPORTING_DISABLED=true
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
