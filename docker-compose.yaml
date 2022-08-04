@@ -55,7 +55,7 @@ services:
  #   depends_on:
  #      - broker
     container_name: node-red
-    image: nodered/node-red:3.0.1
+    image: nodered/node-red:3.0.2
     environment:
     #      - SET_CONTAINER_TIMEZONE=true
     #      - CONTAINER_TIMEZONE=${TIMEZONE}
