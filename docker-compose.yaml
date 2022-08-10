@@ -214,5 +214,5 @@ services:
       
       
 networks:
-  fatheadl-net:
+  homelab_fatheadl-net:
     external: true
