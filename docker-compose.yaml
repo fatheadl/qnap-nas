@@ -18,8 +18,8 @@ services:
       - homelab_fatheadl-net
     mac_address: 02:42:bA:45:24:51
     volumes:
-      - /share/homelab/influxdb2/data:/var/lib/influxdb2
-      - /share/homelab/influxdb2/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - /share/Container/homelab/influxdb2/data:/var/lib/influxdb2
+      - /share/Container/homelab/influxdb2/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
     restart:
       unless-stopped
       
@@ -34,10 +34,10 @@ services:
       - 3000:3000
     mac_address: 02:42:bA:45:24:52      
     volumes:
-      - /share/homelab/grafana:/var/lib/grafana
-      - /share/homelab/grafana/provisioning:/etc/grafana/provisioning
-      - /share/homelab/grafana/grafana.ini:/etc/grafana/grafana.ini
-      - /share/homelab/grafana/dashboards:/etc/grafana/dashboards
+      - /share/Container/homelab/grafana:/var/lib/grafana
+      - /share/Container/homelab/grafana/provisioning:/etc/grafana/provisioning
+      - /share/Container/homelab/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - /share/Container/homelab/grafana/dashboards:/etc/grafana/dashboards
     restart:
       unless-stopped
     networks:
@@ -61,7 +61,7 @@ services:
     #      - CONTAINER_TIMEZONE=${TIMEZONE}
       - TZ=${TIMEZONE}
     volumes:
-      - "/share/homelab/node-red:/data"
+      - "/share/Container/homelab/node-red:/data"
     user: "0"
     restart: unless-stopped
 #    network_mode: host
@@ -85,7 +85,7 @@ services:
     restart: unless-stopped
     image: koenkk/zigbee2mqtt:1.27.0
     volumes:
-      - /share/homelab/zigbee2mqtt-data:/app/data
+      - /share/Container/homelab/zigbee2mqtt-data:/app/data
       - /run/udev:/run/udev:ro
     ports:
       - 8880:8080
@@ -111,9 +111,9 @@ services:
     environment:
       - TZ=${TIMEZONE}
     volumes:
-      - '/share/homelab/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf'
-      - '/share/homelab/mosquitto/log:/mosquitto/log'
-      - '/share/homelab/mosquitto/data:/mosquitto/data'
+      - '/share/Container/homelab/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf'
+      - '/share/Container/homelab/mosquitto/log:/mosquitto/log'
+      - '/share/Container/homelab/mosquitto/data:/mosquitto/data'
     restart: unless-stopped
     networks:
       - homelab_fatheadl-net
@@ -135,7 +135,7 @@ services:
     ports:
       - "8123:8123"
     volumes:
-      - /share/homelab/homeassistant:/config
+      - /share/Container/homelab/homeassistant:/config
 #      - /etc/localtime:/etc/localtime:ro
 #      - /etc/letsencrypt:/etc/letsencrypt:ro
 #    devices:
@@ -166,7 +166,7 @@ services:
       - HOMEBRIDGE_CONFIG_UI=1
       - HOMEBRIDGE_CONFIG_UI_PORT=8581
     volumes:
-      - /share/homelab/homebridge:/homebridge
+      - /share/Container/homelab/homebridge:/homebridge
     networks:
       - homelab_fatheadl-net
     ports:
@@ -196,7 +196,7 @@ services:
       - homelab_fatheadl-net
     mac_address: 02:42:bA:45:24:58
     volumes:
-      - /share/homelab/gitea:/data
+      - /share/Container/homelab/gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
