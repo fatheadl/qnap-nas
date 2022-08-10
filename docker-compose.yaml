@@ -15,7 +15,7 @@ services:
     ports:
       - 8086:8086
     networks:
-      - fatheadl-net
+      - homelab_fatheadl-net
     mac_address: 02:42:bA:45:24:51
     volumes:
       - /share/homelab/influxdb2/data:/var/lib/influxdb2
@@ -41,7 +41,7 @@ services:
     restart:
       unless-stopped
     networks:
-      - fatheadl-net      
+      - homelab_fatheadl-net  
     labels:
       - traefik.enable=true
       - traefik.http.services.grafana.loadbalancer.server.port=3000
@@ -49,7 +49,7 @@ services:
       - traefik.http.routers.grafana.entrypoints=websecure
         #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.grafana.tls.certresolver=le
-      - traefik.docker.network=fatheadl-net
+      - traefik.docker.network=homelab_fatheadl-net
       
   node-red:
  #   depends_on:
@@ -67,7 +67,7 @@ services:
 #    network_mode: host
     mac_address: 02:42:bA:45:24:53
     networks:
-      - fatheadl-net
+      - homelab_fatheadl-net
     ports:
       - "1880:1880"
 
@@ -78,7 +78,7 @@ services:
       - traefik.http.routers.node-red.entrypoints=websecure
 #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.node-red.tls.certresolver=le
-      - traefik.docker.network=fatheadl-net
+      - traefik.docker.network=homelab_fatheadl-net
       
   zigbee2mqtt:
     container_name: zigbee2mqtt
@@ -91,7 +91,7 @@ services:
       - 8880:8080
     mac_address: 02:42:bA:45:24:54      
     networks:
-      - fatheadl-net
+      - homelab_fatheadl-net
     environment:
       - TZ=${TIMEZONE}
 #    devices:
@@ -103,7 +103,7 @@ services:
       - traefik.http.routers.zigbee2mqtt.entrypoints=websecure
 #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.zigbee2mqtt.tls.certresolver=le
-      - traefik.docker.network=fatheadl-net
+      - traefik.docker.network=homelab_fatheadl-net
       
   broker:
     container_name: mqtt
@@ -116,7 +116,7 @@ services:
       - '/share/homelab/mosquitto/data:/mosquitto/data'
     restart: unless-stopped
     networks:
-      - fatheadl-net
+      - homelab_fatheadl-net
     mac_address: 02:42:bA:45:24:55
     ports:
       - "1883:1883"
@@ -129,7 +129,7 @@ services:
     environment:
       - TZ=${TIMEZONE}
     networks:
-      - fatheadl-net
+      - homelab_fatheadl-net
     mac_address: 02:42:bA:45:24:56
 #    network_mode: host
     ports:
@@ -154,7 +154,7 @@ services:
       - traefik.http.routers.homeassistant.entrypoints=websecure
         #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.homeassistant.tls.certresolver=le
-      - traefik.docker.network=fatheadl-net
+      - traefik.docker.network=homelab_fatheadl-net
       
   homebridge:
     image: ghcr.io/oznu/homebridge:ubuntu
@@ -168,7 +168,7 @@ services:
     volumes:
       - /share/homelab/homebridge:/homebridge
     networks:
-      - fatheadl-net      
+      - homelab_fatheadl-net
     ports:
       - 8080:8080
       - 8181:8181
@@ -183,7 +183,7 @@ services:
       - traefik.http.routers.homebridge.entrypoints=websecure
 #      - traefik.http.routers.hoobs.service=hoobs
       - traefik.http.routers.homebridge.tls.certresolver=le
-      - traefik.docker.network=fatheadl-net
+      - traefik.docker.network=homelab_fatheadl-net
       
   gitea:
     image: gitea/gitea:1.17.0
@@ -193,7 +193,7 @@ services:
       - USER_GID=1000
     restart: unless-stopped
     networks:
-      - fatheadl-net
+      - homelab_fatheadl-net
     mac_address: 02:42:bA:45:24:58
     volumes:
       - /share/homelab/gitea:/data
@@ -209,7 +209,7 @@ services:
       - traefik.http.routers.gitea.entrypoints=websecure
 #      - traefik.http.routers.hoobs.service=hoobs
       - traefik.http.routers.gitea.tls.certresolver=le
-      - traefik.docker.network=fatheadl-net      
+      - traefik.docker.network=homelab_fatheadl-net  
       
       
       
