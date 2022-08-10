@@ -24,7 +24,7 @@ services:
       unless-stopped
       
   grafana:
-    image: grafana/grafana:9.0.6
+    image: grafana/grafana:9.0.7
     container_name: grafana
     environment:
       - TZ=${TIMEZONE}
