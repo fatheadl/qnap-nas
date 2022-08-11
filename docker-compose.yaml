@@ -22,6 +22,14 @@ services:
       - /share/Container/homelab/influxdb2/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
     restart:
       unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.influxdb.loadbalancer.server.port=3000
+      - traefik.http.routers.influxdb.rule=Host(`in.${PUBLIC_DOMAIN}`)
+      - traefik.http.routers.influxdb.entrypoints=websecure
+        #      - traefik.http.routers.homeassistant.tls=true
+      - traefik.http.routers.influxdb.tls.certresolver=le
+      - traefik.docker.network=homelab_fatheadl-net      
       
   grafana:
     image: grafana/grafana:9.0.7
