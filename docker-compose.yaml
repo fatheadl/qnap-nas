@@ -115,7 +115,7 @@ services:
       
   broker:
     container_name: mqtt
-    image: eclipse-mosquitto:2.0.14
+    image: eclipse-mosquitto:2.0.15
     environment:
       - TZ=${TIMEZONE}
     volumes:
