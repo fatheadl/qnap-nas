@@ -194,7 +194,7 @@ services:
       - traefik.docker.network=homelab_fatheadl-net
       
   gitea:
-    image: gitea/gitea:1.17.0
+    image: gitea/gitea:1.17.1
     container_name: gitea
     environment:
       - USER_UID=1000
