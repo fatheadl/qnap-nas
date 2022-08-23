@@ -1,7 +1,7 @@
 version: "3"
 services:
   influxdb:
-    image: influxdb:2.3
+    image: influxdb:2.4
     container_name: influxdb
     environment:
       - TZ=${TIMEZONE}
