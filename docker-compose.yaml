@@ -19,7 +19,7 @@ services:
     mac_address: 02:42:bA:45:24:51
     volumes:
       - /share/Container/homelab/influxdb2/data:/var/lib/influxdb2
-      - /share/Container/homelab/influxdb2/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - /share/Container/homelab/influxdb2/config:/etc/influxdb2:ro
     restart:
       unless-stopped
     labels:
