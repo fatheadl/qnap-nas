@@ -206,6 +206,7 @@ services:
     environment:
       - USER_UID=1000
       - USER_GID=1000
+      - TZ=${TIMEZONE}      
     restart: unless-stopped
     networks:
       homelab_fatheadl-net:
@@ -213,8 +214,8 @@ services:
     mac_address: 02:42:bA:45:24:58
     volumes:
       - /volume1/docker/homelab/gitea:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
+#      - /etc/timezone:/etc/timezone:ro
+#      - /etc/localtime:/etc/localtime:ro
     ports:
       - "3030:3000"
       - "222:22"
