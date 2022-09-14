@@ -15,7 +15,8 @@ services:
     ports:
       - 8086:8086
     networks:
-      - homelab_fatheadl-net
+      homelab_fatheadl-net:
+        ipv4_address: ${PRIVATE_NETWORK}.66
     mac_address: 02:42:bA:45:24:51
     volumes:
       - /share/Container/homelab/influxdb2/data:/var/lib/influxdb2
@@ -49,7 +50,8 @@ services:
     restart:
       unless-stopped
     networks:
-      - homelab_fatheadl-net  
+      homelab_fatheadl-net:
+        ipv4_address: ${PRIVATE_NETWORK}.67 
     labels:
       - traefik.enable=true
       - traefik.http.services.grafana.loadbalancer.server.port=3000
@@ -75,7 +77,8 @@ services:
 #    network_mode: host
     mac_address: 02:42:bA:45:24:53
     networks:
-      - homelab_fatheadl-net
+      homelab_fatheadl-net:
+        ipv4_address: ${PRIVATE_NETWORK}.68
     ports:
       - "1880:1880"
 
@@ -99,7 +102,8 @@ services:
       - 8880:8080
     mac_address: 02:42:bA:45:24:54      
     networks:
-      - homelab_fatheadl-net
+      homelab_fatheadl-net:
+        ipv4_address: ${PRIVATE_NETWORK}.69
     environment:
       - TZ=${TIMEZONE}
 #    devices:
@@ -124,7 +128,8 @@ services:
       - '/share/Container/homelab/mosquitto/data:/mosquitto/data'
     restart: unless-stopped
     networks:
-      - homelab_fatheadl-net
+      homelab_fatheadl-net:
+        ipv4_address: ${PRIVATE_NETWORK}.70
     mac_address: 02:42:bA:45:24:55
     ports:
       - "1883:1883"
@@ -137,7 +142,8 @@ services:
     environment:
       - TZ=${TIMEZONE}
     networks:
-      - homelab_fatheadl-net
+      homelab_fatheadl-net:
+        ipv4_address: ${PRIVATE_NETWORK}.71
     mac_address: 02:42:bA:45:24:56
 #    network_mode: host
     ports:
@@ -176,7 +182,8 @@ services:
     volumes:
       - /share/Container/homelab/homebridge:/homebridge
     networks:
-      - homelab_fatheadl-net
+      homelab_fatheadl-net:
+        ipv4_address: ${PRIVATE_NETWORK}.72
     ports:
       - 8080:8080
       - 8181:8181
@@ -201,7 +208,8 @@ services:
       - USER_GID=1000
     restart: unless-stopped
     networks:
-      - homelab_fatheadl-net
+      homelab_fatheadl-net:
+        ipv4_address: ${PRIVATE_NETWORK}.73
     mac_address: 02:42:bA:45:24:58
     volumes:
       - /share/Container/homelab/gitea:/data
