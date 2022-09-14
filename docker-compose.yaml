@@ -19,8 +19,8 @@ services:
         ipv4_address: ${PRIVATE_NETWORK}.66
     mac_address: 02:42:bA:45:24:51
     volumes:
-      - /share/Container/homelab/influxdb2/data:/var/lib/influxdb2
-      - /share/Container/homelab/influxdb2/config:/etc/influxdb2
+      - /volume1/docker/homelab/influxdb2/data:/var/lib/influxdb2
+      - /volume1/docker/homelab/influxdb2/config:/etc/influxdb2
     restart:
       unless-stopped
     labels:
@@ -43,10 +43,10 @@ services:
       - 3000:3000
     mac_address: 02:42:bA:45:24:52      
     volumes:
-      - /share/Container/homelab/grafana:/var/lib/grafana
-      - /share/Container/homelab/grafana/provisioning:/etc/grafana/provisioning
-      - /share/Container/homelab/grafana/grafana.ini:/etc/grafana/grafana.ini
-      - /share/Container/homelab/grafana/dashboards:/etc/grafana/dashboards
+      - /volume1/docker/homelab/grafana:/var/lib/grafana
+      - /volume1/docker/homelab/grafana/provisioning:/etc/grafana/provisioning
+      - /volume1/docker/homelab/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - /volume1/docker/homelab/grafana/dashboards:/etc/grafana/dashboards
     restart:
       unless-stopped
     networks:
@@ -71,7 +71,7 @@ services:
     #      - CONTAINER_TIMEZONE=${TIMEZONE}
       - TZ=${TIMEZONE}
     volumes:
-      - "/share/Container/homelab/node-red:/data"
+      - "/volume1/docker/homelab/node-red:/data"
     user: "0"
     restart: unless-stopped
 #    network_mode: host
@@ -96,7 +96,7 @@ services:
     restart: unless-stopped
     image: koenkk/zigbee2mqtt:1.27.2
     volumes:
-      - /share/Container/homelab/zigbee2mqtt-data:/app/data
+      - /volume1/docker/homelab/zigbee2mqtt-data:/app/data
       - /run/udev:/run/udev:ro
     ports:
       - 8880:8080
@@ -123,9 +123,9 @@ services:
     environment:
       - TZ=${TIMEZONE}
     volumes:
-      - '/share/Container/homelab/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf'
-      - '/share/Container/homelab/mosquitto/log:/mosquitto/log'
-      - '/share/Container/homelab/mosquitto/data:/mosquitto/data'
+      - '/volume1/docker/homelab/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf'
+      - '/volume1/docker/homelab/mosquitto/log:/mosquitto/log'
+      - '/volume1/docker/homelab/mosquitto/data:/mosquitto/data'
     restart: unless-stopped
     networks:
       homelab_fatheadl-net:
@@ -149,7 +149,7 @@ services:
     ports:
       - "8123:8123"
     volumes:
-      - /share/Container/homelab/homeassistant:/config
+      - /volume1/docker/homelab/homeassistant:/config
 #      - /etc/localtime:/etc/localtime:ro
 #      - /etc/letsencrypt:/etc/letsencrypt:ro
 #    devices:
@@ -180,7 +180,7 @@ services:
       - HOMEBRIDGE_CONFIG_UI=1
       - HOMEBRIDGE_CONFIG_UI_PORT=8581
     volumes:
-      - /share/Container/homelab/homebridge:/homebridge
+      - /volume1/docker/homelab/homebridge:/homebridge
     networks:
       homelab_fatheadl-net:
         ipv4_address: ${PRIVATE_NETWORK}.72
@@ -212,7 +212,7 @@ services:
         ipv4_address: ${PRIVATE_NETWORK}.73
     mac_address: 02:42:bA:45:24:58
     volumes:
-      - /share/Container/homelab/gitea:/data
+      - /volume1/docker/homelab/gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
