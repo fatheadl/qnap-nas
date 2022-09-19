@@ -31,7 +31,7 @@ services:
         #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.influxdb.tls.certresolver=le
       - traefik.docker.network=homelab_fatheadl-net
-      - traefik.http.routers.influxdb.middlewares=geoblock-ch@file,simpleAuth@file
+      - traefik.http.routers.influxdb.middlewares=my-GeoBlock@file,simpleAuth@file
       
   grafana:
     image: grafana/grafana:9.1.5
@@ -61,7 +61,7 @@ services:
         #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.grafana.tls.certresolver=le
       - traefik.docker.network=homelab_fatheadl-net
-      - traefik.http.routers.grafana.middlewares=geoblock-ch@file,simpleAuth@file
+      - traefik.http.routers.grafana.middlewares=my-GeoBlock@file,simpleAuth@file
       
   node-red:
  #   depends_on:
@@ -92,7 +92,7 @@ services:
 #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.node-red.tls.certresolver=le
       - traefik.docker.network=homelab_fatheadl-net
-      - traefik.http.routers.node-red.middlewares=geoblock-ch@file,simpleAuth@file
+      - traefik.http.routers.node-red.middlewares=my-GeoBlock@file,simpleAuth@file
       
   zigbee2mqtt:
     container_name: zigbee2mqtt
@@ -119,7 +119,7 @@ services:
 #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.zigbee2mqtt.tls.certresolver=le
       - traefik.docker.network=homelab_fatheadl-net
-      - traefik.http.routers.zigbee2mqtt.middlewares=geoblock-ch@file,simpleAuth@file
+      - traefik.http.routers.zigbee2mqtt.middlewares=my-GeoBlock@file,simpleAuth@file
       
   broker:
     container_name: mqtt
@@ -173,7 +173,7 @@ services:
         #      - traefik.http.routers.homeassistant.tls=true
       - traefik.http.routers.homeassistant.tls.certresolver=le
       - traefik.docker.network=homelab_fatheadl-net
-      - traefik.http.routers.homeassistant.middlewares=geoblock-ch@file,simpleAuth@file
+      - traefik.http.routers.homeassistant.middlewares=my-GeoBlock@file,simpleAuth@file
       
   homebridge:
     image: ghcr.io/oznu/homebridge:ubuntu@sha256:aff86ae60be6278e0b7de75c7b5a61abd11b30617b5a255a2eb28e44e2309d26
@@ -204,7 +204,7 @@ services:
 #      - traefik.http.routers.hoobs.service=hoobs
       - traefik.http.routers.homebridge.tls.certresolver=le
       - traefik.docker.network=homelab_fatheadl-net
-      - traefik.http.routers.homebridge.middlewares=geoblock-ch@file,simpleAuth@file
+      - traefik.http.routers.homebridge.middlewares=my-GeoBlock@file,simpleAuth@file
       
   gitea:
     image: gitea/gitea:1.17.2
@@ -233,7 +233,7 @@ services:
 #      - traefik.http.routers.hoobs.service=hoobs
       - traefik.http.routers.gitea.tls.certresolver=le
       - traefik.docker.network=homelab_fatheadl-net
-      - traefik.http.routers.gitea.middlewares=geoblock-ch@file,simpleAuth@file
+      - traefik.http.routers.gitea.middlewares=my-GeoBlock@file,simpleAuth@file
       
       
       
