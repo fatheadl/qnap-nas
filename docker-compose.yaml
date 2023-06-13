@@ -34,7 +34,7 @@ services:
       - traefik.http.routers.influxdb.middlewares=my-GeoBlock@file,simpleAuth@file
       
   grafana:
-    image: grafana/grafana:9.5.3
+    image: grafana/grafana:10.0.0
     container_name: grafana
     environment:
       - TZ=${TIMEZONE}
