@@ -123,7 +123,7 @@ services:
       
   broker:
     container_name: mqtt
-    image: eclipse-mosquitto:2.0.17
+    image: eclipse-mosquitto:2.0.18
     environment:
       - TZ=${TIMEZONE}
     volumes:
