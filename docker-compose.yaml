@@ -207,7 +207,7 @@ services:
       - traefik.http.routers.homebridge.middlewares=my-GeoBlock@file,simpleAuth@file
       
   gitea:
-    image: gitea/gitea:1.21.8
+    image: gitea/gitea:1.21.9
     container_name: gitea
     environment:
       - USER_UID=1000
