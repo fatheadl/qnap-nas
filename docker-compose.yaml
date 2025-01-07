@@ -142,7 +142,7 @@ services:
   homeassistant:
     container_name: homeassistant
     #    image: homeassistant/raspberrypi4-homeassistant:stable
-    image: homeassistant/home-assistant:2025.1.0
+    image: homeassistant/home-assistant:2025.1.1
     environment:
       - TZ=${TIMEZONE}
     networks:
